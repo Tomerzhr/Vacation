@@ -91,11 +91,11 @@ button {
 @media (max-width:450px) {
 
     .contactBox {
-        top: 0;
-        right: 0;
+        top: 10%;
+        right: 5%;
         text-align: center;
         padding: 0 1rem;
-        width: auto;
+        width: 80%;
         height: 60%;
     }
 
@@ -107,5 +107,9 @@ button {
         display: flex;
         flex-direction: column;
         align-items: center;
+    }
+
+    button {
+        width: 80%;
     }
 }
