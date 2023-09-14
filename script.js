@@ -1,37 +1,42 @@
 const formField = document.querySelector(".form-field");
 const emailInput = document.forms["form-field"]["email"];
 const nameInput = document.forms["form-field"]["fullName"];
+const formBtn = document.querySelector(".formBtn");
 
-function nameValidation(name) {
-  let nameRegex = /^[a-zA-Z\u0590-\u05FF\u200f\u200e ]+$/;
-  return name.match(nameRegex);
-}
-function emailValidation(email) {
-  let emailRegex = /^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-  return email.match(emailRegex);
-}
+formBtn.disabled = true;
 
-function formValidation(e) {
-  const name = document.forms["form-field"]["fullName"].value;
-  const email = document.forms["form-field"]["email"].value;
+nameInput.addEventListener("input", formValidation);
+emailInput.addEventListener("input", formValidation);
 
+formBtn.addEventListener("click", (e) => {
   e.preventDefault();
-
-  if (!nameValidation(name)) {
-    nameInput.style.borderColor = "red";
-    return;
-  } else {
-    nameInput.style.borderColor = "#071192";
-  }
-  if (!emailValidation(email)) {
-    emailInput.style.borderColor = "red";
-    return;
-  } else {
-    emailInput.style.borderColor = "#071192";
-  }
   document.querySelector(".confirmation-message").style.display = "block";
   nameInput.value = "";
   emailInput.value = "";
+});
+
+function nameValidation(name) {
+  let nameRegex = /^[a-zA-Zֿֿֿֿ\s]+$/;
+  if (nameRegex.test(name.value) === false || name.value === "" || name.value == null || name.value.length < 5) {
+    nameInput.style.borderColor = "red";
+  } else {
+    nameInput.style.borderColor = "#071192";
+    return true;
+  }
 }
 
-formField.addEventListener("click", formValidation);
+function emailValidation(email) {
+  let emailRegex = /^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+  if (emailRegex.test(email.value) === false || email.value === "" || email.value == null) {
+    emailInput.style.borderColor = "red";
+  } else {
+    emailInput.style.borderColor = "#071192";
+    return true;
+  }
+}
+
+function formValidation() {
+  if (nameValidation(nameInput) && emailValidation(emailInput)) {
+    formBtn.disabled = false;
+  }
+}
